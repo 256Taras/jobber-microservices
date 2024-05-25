@@ -1,0 +1,3 @@
+[submodule "server/9-jobber-shared"]
+	path = server/9-jobber-shared
+	url = https://github.com/256Taras/jobber-shared
