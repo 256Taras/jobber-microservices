@@ -4,8 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -r tsconfig-path/register src/app.ts | pino-pretty -c",
-    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json"
+    "start": "pm2 start ./build/src/app.js -i 2 --attach --watch | pino-pretty -c",
+    "stop": "pm2 stop all",
+    "delete": "pm2 delete all",
+    "dev": "nodemon -r tsconfig-paths/register src/app.ts | pino-pretty -c",
+    "lint:check": "eslint 'src/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' --fix",
+    "prettier:check": "prettier --check 'src/**/*.{ts,json}'",
+    "prettier:fix": "prettier --write 'src/**/*.{ts,json}'",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
+    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false"
   },
   "keywords": [],
   "author": "",
@@ -31,8 +39,8 @@
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^8.10.0",
     "@256taras/jobber-shared": "0.0.3",
+    "@elastic/elasticsearch": "^8.10.0",
     "amqplib": "^0.10.3",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",

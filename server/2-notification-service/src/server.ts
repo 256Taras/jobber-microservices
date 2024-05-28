@@ -5,26 +5,32 @@ import {Logger} from 'winston';
 import { config } from '@notifications/config';
 import {Application} from 'express';
 import {healthRoutes} from '@notifications/route';
+import { createConnection } from '@notifications/queues/connection';
+import { Channel } from 'amqplib';
+import { checkConnection } from '@notifications/elasticsearch';
+
+import { consumeAuthEmailMessages, consumeOrderEmailMessages } from './queues/email.consumer';
 
 const SERVER_PORT = 4001;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationServer', 'debug');
 
 
-export function start(app: Application): void {
+export  function start(app: Application): void {
   startServer(app);
   app.use('', healthRoutes());
-  startQueues().then();
+  startQueues();
   startElasticSearch();
 }
 
-async function startQueues(): Promise<void>{
-
+async function startQueues(): Promise<void> {
+  const emailChannel: Channel = await createConnection() as Channel;
+  await consumeAuthEmailMessages(emailChannel);
+  await consumeOrderEmailMessages(emailChannel);
 }
 
-function startElasticSearch():void{
-
+function startElasticSearch(): void {
+  checkConnection();
 }
-
 
 function startServer(app: Application): void {
   try {
