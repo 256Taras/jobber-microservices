@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import compression from 'compression';
 import { StatusCodes } from 'http-status-codes';
-
+import { axiosAuthInstance } from '@gateway/services/api/auth.service';
 
 import * as http from 'http';
 import { config } from './config';
@@ -54,6 +54,13 @@ export class GatewayServer {
         credentials: true,
         methods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH', 'OPTION']
      }));
+
+      app.use((req: Request, _res: Response, next: NextFunction) => {
+        if (req.session?.jwt) {
+          axiosAuthInstance.defaults.headers['Authorization'] = `Bearer ${req.session?.jwt}`;
+        }
+        next();
+      });
     }
 
     private standardMiddleware(app: Application){
@@ -69,7 +76,7 @@ export class GatewayServer {
     }
 
     private startElasticSearch():void{
-        
+
         elasticSearch.checkConnection();
     }
 
@@ -80,13 +87,13 @@ export class GatewayServer {
           res.status(StatusCodes.NOT_FOUND).json({ message: 'The endpoint called does not exist.'});
           next();
         });
-    
+
         app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
           if (error instanceof CustomError) {
             log.log('error', `GatewayService ${error.comingFrom}:`, error);
             res.status(error.statusCode).json(error.serializeErrors());
           }
- 
+
           next();
         });
       }
@@ -94,7 +101,7 @@ export class GatewayServer {
       private async startServer(app: Application): Promise<void> {
         try {
           const httpServer: http.Server = new http.Server(app);
-        
+
           await this.startHttpServer(httpServer);
         } catch (error) {
           log.log('error', 'GatewayService startServer() error method:', error);
