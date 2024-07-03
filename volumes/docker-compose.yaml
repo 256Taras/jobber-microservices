@@ -127,6 +127,7 @@ services:
       - ELASTIC_APM_SERVER_URL=http://apm_server_container:8200
       - ELASTIC_APM_SECRET_TOKEN=
     depends_on:
+      - elasticnet
 
   notifications:
     container_name: notification_container

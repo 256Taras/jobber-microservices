@@ -1,6 +1,5 @@
 import { IAuthDocument } from '@256taras/jobber-shared';
 import { sequelize } from '@auth/database';
-
 import { compare, hash } from 'bcryptjs';
 import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 
@@ -74,14 +73,17 @@ AuthModel.addHook('beforeCreate', async (auth: Model) => {
   auth.dataValues.password = hashedPassword;
 });
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 AuthModel.prototype.comparePassword = async function (password: string, hashedPassword: string): Promise<boolean> {
   return compare(password, hashedPassword);
 };
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 AuthModel.prototype.hashPassword = async function (password: string): Promise<string> {
   return hash(password, SALT_ROUND);
 };
 
 // force: true always deletes the table when there is a server restart
-AuthModel.sync({});
+// AuthModel.sync({});
 export { AuthModel };

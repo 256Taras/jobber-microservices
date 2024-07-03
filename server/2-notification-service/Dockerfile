@@ -1,6 +1,7 @@
 ### First stage: Build the project
 FROM node:21-alpine3.18 as builder
 
+
 # Set the working directory inside the container
 WORKDIR /app
 
