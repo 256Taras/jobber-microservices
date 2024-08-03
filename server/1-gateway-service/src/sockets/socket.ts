@@ -72,5 +72,4 @@ export class SocketIOAppHandler {
       this.io.emit('message updated', data);
     });
   }
-
 };

@@ -4,6 +4,7 @@ import {authMiddleware} from '@gateway/services/auth-middleware';
 import {currentUserRoutes} from '@gateway/routes/current-user';
 import {buyerRoutes} from '@gateway/routes/buyer';
 import {sellerRoutes} from '@gateway/routes/seller';
+import {reviewRoutes} from '@gateway/routes/review';
 
 import { healthRoutes } from './routes/heath';
 
@@ -17,4 +18,6 @@ export const appRoutes = (app: Application) => {
   app.use(BASE_PATH, authMiddleware.verifyUser, currentUserRoutes.routes());
   app.use(BASE_PATH, authMiddleware.verifyUser, buyerRoutes.routes());
   app.use(BASE_PATH, authMiddleware.verifyUser, sellerRoutes.routes());
+
+  app.use(BASE_PATH, authMiddleware.verifyUser, reviewRoutes.routes());;
 };
