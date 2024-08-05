@@ -1,4 +1,4 @@
-import { IAuthPayload, IBuyerDocument } from '@uzochukwueddie/jobber-shared';
+import { IAuthPayload, IBuyerDocument } from '@256taras/jobber-shared';
 import { Response } from 'express';
 
 export const buyerMockRequest = (sessionData: IJWT, currentUser?: IAuthPayload | null, params?: IParams) => ({

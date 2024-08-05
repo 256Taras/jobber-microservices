@@ -4,7 +4,7 @@ import * as buyer from '@users/services/buyer.service';
 import { currentUsername, email, username } from '@users/controllers/buyer/get';
 
 jest.mock('@users/services/buyer.service');
-jest.mock('@uzochukwueddie/jobber-shared');
+jest.mock('@256taras/jobber-shared');
 jest.mock('@elastic/elasticsearch');
 
 describe('Buyer Controller', () => {

@@ -8,8 +8,8 @@ import * as gigService from '@gig/services/gig.service';
 import { authUserPayload, gigMockRequest, gigMockResponse, sellerGig } from '@gig/controllers/test/mocks/gig.mock';
 
 jest.mock('@gig/services/gig.service');
-jest.mock('@uzochukwueddie/jobber-shared');
-jest.mock('@uzochukwueddie/jobber-shared');
+jest.mock('@256taras/jobber-shared');
+jest.mock('@256taras/jobber-shared');
 jest.mock('@gig/schemes/gig');
 jest.mock('@gig/elasticsearch');
 jest.mock('@elastic/elasticsearch');
