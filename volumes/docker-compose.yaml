@@ -347,7 +347,7 @@ services:
       - mongodb
 
   review:
-    container_name: order_container
+    container_name: review_container
     build:
       context: ../server/8-review-service
       dockerfile: Dockerfile.dev
